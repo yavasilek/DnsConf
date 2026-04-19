@@ -169,15 +169,8 @@ public class ListService {
     private static <T> List<List<T>> cutChunks(List<T> list) {
         final int chunkSize = 1000;
         List<List<T>> chunks = new ArrayList<>();
-        if (list.size() <= chunkSize) {
-            chunks = List.of(list);
-
-        } else {
-            for (int i = 0; list.size() > i + chunkSize; i += chunkSize) {
-                chunks.add(list.subList(i, i + chunkSize));
-            }
-            int tail = list.size() % chunkSize;
-            chunks.add(list.subList(list.size() - tail, list.size()));
+        for (int i = 0; i < list.size(); i += chunkSize) {
+            chunks.add(list.subList(i, Math.min(i + chunkSize, list.size())));
         }
         return chunks;
     }
